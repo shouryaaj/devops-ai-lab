@@ -1,0 +1,2 @@
+variant,image_mb,layers,cold_build_s,rebuild_after_code_change_s,startup_s,runs_as
+naive,416.9,18,7.5,7.0,0.17,root

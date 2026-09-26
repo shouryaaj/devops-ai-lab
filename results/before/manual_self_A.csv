@@ -1,0 +1,7 @@
+scenario,manual_seconds,manual_correct,manual_answer
+S1_logic_bug,60.6,1,"apply_discount uses 100 + percent , change to 100 - percent "
+S2_syntax_error,52.9,1,"SyntaxError in app.py line 22: missing colon after def get_port() , add "":"""
+S3_missing_dependency,36.6,1,"flask_cors not installed , add to requirements to remove import "
+S4_key_typo,36.0,1,"typo ""nmae"" in get_product , change to ""name"""
+S5_config_typo,15.9,0,
+S6_wrong_status,28.3,1,"missing product returns 200 , change to 404"

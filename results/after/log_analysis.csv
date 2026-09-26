@@ -1,0 +1,7 @@
+scenario,run,model,log_lines,answer_lines,ai_seconds,tokens_per_s,ai_correct_auto
+S1_logic_bug,1,mistral:latest,40,4,9.41,12.4,1
+S2_syntax_error,1,mistral:latest,38,4,10.31,12.7,1
+S3_missing_dependency,1,mistral:latest,26,4,6.39,14.1,1
+S4_key_typo,1,mistral:latest,76,4,10.55,11.8,1
+S5_config_typo,1,mistral:latest,38,4,9.06,13.8,0
+S6_wrong_status,1,mistral:latest,31,4,12.21,13.1,1

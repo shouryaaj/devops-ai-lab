@@ -1,0 +1,12 @@
+# Fallback optimised Dockerfile (reviewed). Use if the local model's Dockerfile.ai fails to build.
+FROM python:3.12-slim
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+WORKDIR /app
+# Dependencies first so this layer is cached when only code changes
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY app.py .
+RUN useradd --create-home appuser
+USER appuser
+EXPOSE 5000
+CMD ["python", "app.py"]

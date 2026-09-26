@@ -1,0 +1,4 @@
+#!/bin/sh
+# AI writes a Conventional Commit message when you run plain `git commit`
+if python3 -c "" 2>/dev/null; then PY=python3; else PY=python; fi
+exec "$PY" ai/commit_assist.py msg "$1" "$2"

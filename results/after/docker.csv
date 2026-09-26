@@ -1,0 +1,2 @@
+variant,image_mb,layers,cold_build_s,rebuild_after_code_change_s,startup_s,runs_as
+optimized,44.9,19,3.8,1.1,0.49,appuser
