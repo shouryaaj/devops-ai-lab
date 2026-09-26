@@ -1,6 +1,6 @@
 // AI-assisted CI pipeline (Module 3 - Jenkins)
 // Works on Windows and Linux/macOS agents. Needs Python + Docker on the agent, Ollama running.
-def run(String cmd) { if (isUnix()) { sh cmd } else { bat cmd } }
+def runCmd(String cmd) { if (isUnix()) { sh cmd } else { bat cmd } }
 
 pipeline {
     agent any
@@ -24,24 +24,24 @@ pipeline {
             steps {
                 checkout scm
                 script { env.PY = isUnix() ? 'python3' : 'python' }
-                run "${env.PY} -c \"open('build.log','w').close()\""
+                runCmd "${env.PY} -c \"open('build.log','w').close()\""
             }
         }
         stage('Install') {
-            steps { run "${env.PY} ai/run_step.py build.log ${env.PY} -m pip install -q -r requirements-dev.txt" }
+            steps { runCmd "${env.PY} ai/run_step.py build.log ${env.PY} -m pip install -q -r requirements-dev.txt" }
         }
         stage('Test') {
-            steps { run "${env.PY} ai/run_step.py build.log ${env.PY} -m pytest -v" }
+            steps { runCmd "${env.PY} ai/run_step.py build.log ${env.PY} -m pytest -v" }
         }
         stage('Docker Build') {
-            steps { run "${env.PY} ai/run_step.py build.log docker build -f Dockerfile.optimized -t ${env.IMAGE}:${env.BUILD_NUMBER} ." }
+            steps { runCmd "${env.PY} ai/run_step.py build.log docker build -f Dockerfile.optimized -t ${env.IMAGE}:${env.BUILD_NUMBER} ." }
         }
     }
 
     post {
         failure {
             echo "Build failed (AI_ASSIST=${env.AI_ASSIST})"
-            run "${env.PY} ai/analyze_log.py build.log"
+            runCmd "${env.PY} ai/analyze_log.py build.log"
         }
         success {
             echo "Built ${env.IMAGE}:${env.BUILD_NUMBER}"
