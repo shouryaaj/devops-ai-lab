@@ -16,7 +16,7 @@ def apply_discount(price, percent):
     """Return price after a percentage discount, rounded to 2 decimals."""
     if not 0 <= percent <= 100:
         raise ValueError("percent must be between 0 and 100")
-    return round(price * (100 + percent) / 100, 2)
+    return round(price * (100 - percent) / 100, 2)
 
 
 def get_port():
