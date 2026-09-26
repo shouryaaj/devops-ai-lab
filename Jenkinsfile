@@ -8,6 +8,8 @@ pipeline {
     parameters {
         booleanParam(name: 'AI_ASSIST', defaultValue: true,
                      description: 'Untick = BEFORE AI (plain pipeline). Tick = AFTER AI (LLM diagnoses failures).')
+        booleanParam(name: 'DOCKER_BUILD', defaultValue: false,
+                     description: 'Build the Docker image (needs Docker reachable by the Jenkins service).')
     }
 
     environment {
@@ -34,6 +36,7 @@ pipeline {
             steps { runCmd "${env.PY} ai/run_step.py build.log ${env.PY} -m pytest -v" }
         }
         stage('Docker Build') {
+            when { expression { return params.DOCKER_BUILD == true } }
             steps { runCmd "${env.PY} ai/run_step.py build.log docker build -f Dockerfile.optimized -t ${env.IMAGE}:${env.BUILD_NUMBER} ." }
         }
     }

@@ -10,7 +10,13 @@ import sys
 log_path, cmd = sys.argv[1], sys.argv[2:]
 with open(log_path, "a", encoding="utf-8") as log:
     log.write(f"\n$ {' '.join(cmd)}\n")
-    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, errors="replace")
+    try:
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, errors="replace")
+    except FileNotFoundError:
+        msg = f"ERROR: command not found: '{cmd[0]}' is not installed or not on PATH for this Jenkins agent\n"
+        sys.stdout.write(msg)
+        log.write(msg)
+        sys.exit(127)
     for line in proc.stdout:
         sys.stdout.write(line)
         log.write(line)
